@@ -508,42 +508,17 @@ body {
 /* Responsive Design básico para móviles (768px y menos) */
 @media (max-width: 48rem) { /* 768px */
     body {
-        /* Eliminamos el padding-left para centrar */
         padding-left: 0;
-        /* Centramos el body vertical y horizontalmente */
         justify-content: center;
-        align-items: center; 
-        padding-bottom: 0; /* Aseguramos que no haya padding inferior */
+        align-items: flex-end;
+        padding-bottom: 1.25rem; /* 20px */
     }
 
     .main-container {
-        /* Hacemos el contenedor principal más pequeño como pediste */
-        width: 18rem; /* 288px, más pequeño que los 320px anteriores */
-        height: 16rem; /* 256px, más pequeño */
-        /* Lo centramos completamente */
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-    
-    /* Movemos los enlaces de navegación */
-    .nav-links {
-        /* Subimos la posición de 35px a 20px */
-        bottom: 1.25rem; /* 20px */
-        /* Aseguramos que siga centrado horizontalmente */
-        left: 50%; 
-        transform: translateX(-50%);
-        /* Reducimos el tamaño de la fuente para que sea más pequeño */
-        font-size: 1rem; 
+        width: 90%;
+        height: 18.75rem; /* 300px */
     }
 
-    /* Reducimos la altura de la línea separadora */
-    .separator-line {
-        height: 1rem; /* 16px, más pequeña */
-    }
-
-    /* El resto de estilos del panel lateral y demás que ya tenías */
     .info-panel {
         width: 100vw;
         padding: 0rem 2.5rem; /* 40px */
@@ -576,13 +551,11 @@ body {
     
     /* ESTILO PARA LA FRASE EN MÓVIL */
     .anim-text {
-        font-size: 1.2rem; /* Aumentamos el tamaño de la fuente como pediste (antes era 0.9rem) */
+        font-size: 0.9rem; 
         margin-left: 0;
-        margin-top: 0.125rem; /* 2px de espacio, lo subimos para acercarlo al número */
-        white-space: normal; /* Permitimos que salte de línea para que ocupe el ancho del 25 */
-        line-height: 1.2;
-        /* Eliminamos la transición que tenía en la versión de escritorio para mostrarse más rápido en móvil */
-        transform: none; 
+        margin-top: 0.3125rem; /* 5px de espacio entre el número y la frase */
+        white-space: nowrap; /* Mantenemos esto para que no salte de línea */
+        line-height: 1;
     }
 
     .work-grid {
