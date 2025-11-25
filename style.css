@@ -1,0 +1,576 @@
+/* Reinicio básico y estilo general */
+:root {
+    --color-primary: #e31b23; /* Variable para el color rojo RAF */
+    --color-text-dark: #333;
+    --color-text-light: #666;
+    --color-background-white: #fff;
+    --color-border-light: #eee;
+    font-size: 16px; /* Establece 1rem = 16px como base (se puede omitir, es el valor por defecto) */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+body {
+    overflow: hidden; 
+    display: flex; 
+    align-items: center; 
+    justify-content: flex-start; 
+    padding-left: 9.375rem; /* 150px convertido a rem */
+    height: 100vh; 
+    transition: padding-left 0.3s; 
+    background-color: var(--color-background-white);
+}
+
+/* --- Estilo para el contenedor principal (la carcasa exterior) --- */
+.main-container {
+    width: 20rem;            /* 320px */
+    height: 21.875rem;        /* 350px */
+    background-color: transparent; 
+    z-index: 10;
+    position: relative; 
+    perspective: 1000px; 
+    transition: opacity 0.3s; 
+}
+
+/* Contenedor interno que rota 180 grados */
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s; 
+    transform-style: preserve-3d; 
+}
+
+/* Clase que añadiremos con JavaScript para girar la tarjeta */
+.main-container.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+/* Posición y estilos base para ambas caras (anverso y reverso) */
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; 
+    border-radius: 0.9375rem; /* 15px */
+    box-shadow: 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.1); /* 5px, 15px */
+    padding: 0; 
+    z-index: 40; 
+    background-color: var(--color-background-white);
+}
+
+/* Estilo específico del Reverso (Espalda) - CORREGIDO CON FLEXBOX */
+.card-back {
+    color: var(--color-text-dark);
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.25rem; /* 20px */
+}
+
+/* --- Estilos del contenido restante de la tarjeta principal --- */
+.contact-info {
+    text-align: center;
+    z-index: 30;
+}
+
+.contact-info a {
+    display: block;
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: 1.3rem;
+    margin: 0.3125rem 0; /* 5px */
+    white-space: nowrap;
+}
+
+.contact-address {
+    color: var(--color-text-light);
+    font-size: 1.1rem; 
+    margin-top: 0.625rem; /* 10px */
+    white-space: nowrap;
+}
+
+/* ESTILO DE BOTONES CUADRADOS ROJOS (Trasero '←') */
+.back-button {
+    width: 2.5rem; height: 2.5rem; background-color: var(--color-primary); /* 40px */
+    border-radius: 0.3125rem; /* 5px */
+    display: flex; justify-content: center; align-items: center; border: none; 
+    cursor: pointer; box-shadow: 0 0.125rem 0.3125rem rgba(0,0,0,0.2); /* 2px 5px */
+    transition: opacity 0.3s ease-out;
+}
+
+/* Estilos de los iconos internos (flecha) */
+.back-icon { color: #fff; font-size: 1.5rem; font-weight: bold; line-height: 1; } /* 24px */
+
+
+/* --- Estilos de Gráficos (Video, Logos, etc.) --- */
+
+.video-background { position: fixed; right: 0; bottom: 0; min-width: 100%; min-height: 100%; }
+.video-background video { min-width: 100%; min-height: 100%; width: auto; height: auto; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+.graphics-area { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; overflow: hidden; }
+.stripes-img { z-index: 1; width: 500%; height: auto; position: absolute; bottom: -2.5rem; /* -40px */ display: block; left: -25rem; /* -400px */ transform: rotate(-6deg); }
+.logo-img { position: absolute; bottom: -7.5rem; /* -120px */ left: 50%; transform: translateX(-50%); width: 15.625rem; /* 250px */ z-index: 20; transition: opacity 0.3s ease-out; }
+
+.video-control-btn { position: fixed; bottom: 2.5rem; /* 40px */ right: 2.5rem; /* 40px */ z-index: 30; background: none; border: none; color: white; cursor: pointer; padding: 0.625rem 0.9375rem; /* 10px 15px */ font-size: 1.5rem; background-color: rgba(0, 0, 0, 0.3); border-radius: 0.3125rem; /* 5px */ backdrop-filter: blur(0.125rem); /* 2px */ -webkit-backdrop-filter: blur(0.125rem); transition: background-color 0.3s; }
+.video-control-btn:hover { background-color: rgba(0, 0, 0, 0.6); }
+
+
+/* --- ESTILOS PARA LA NAVEGACIÓN INFERIOR (CONTACT | ABOUT) --- */
+.nav-links {
+    position: absolute;
+    bottom: 2.1875rem; /* 35px */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.9375rem; /* 15px */
+    z-index: 20;
+    font-size: 1.2rem; 
+}
+
+.nav-link {
+    color: var(--color-primary); 
+    text-decoration: none;
+    font-weight: 500; 
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: opacity 0.3s;
+}
+
+.nav-link:hover {
+    opacity: 0.7;
+}
+
+.separator-line {
+    width: 0.125rem; /* 2px */
+    height: 1.5625rem; /* 25px */
+    background-color: var(--color-primary);
+}
+
+
+/* --- ESTILOS DEL PANEL LATERAL DE INFORMACIÓN --- */
+.info-panel {
+    position: fixed;
+    top: 0;
+    right: 0; 
+    width: 50vw; 
+    height: 100vh;
+    background-color: var(--color-background-white);
+    z-index: 50;
+    box-shadow: -0.3125rem 0 0.9375rem rgba(0, 0, 0, 0.2); /* -5px 0 15px */
+    transform: translateX(100%); 
+    transition: transform 0.5s ease-out; 
+    padding: 0rem 5rem; /* 80px */
+    overflow-y: auto; /* Permite el scroll */
+}
+
+.info-panel.is-active {
+    transform: translateX(0); 
+}
+
+/* BANDA FIJA (WRAPPER) */
+.sticky-panel-header {
+    position: sticky;
+    top: 0;
+    z-index: 60; 
+    background-color: var(--color-background-white); 
+    padding-top: 0.9375rem; /* 15px */
+    padding-bottom: 1.25rem; /* 20px */
+    border-bottom: 0.0625rem solid var(--color-border-light); /* 1px */
+}
+
+/* Header Fijo del Panel */
+.panel-header {
+    margin-bottom: 1.25rem; /* 20px */
+    padding-bottom: 0rem; 
+    border-bottom: none; 
+}
+
+.panel-logo {
+    width: 9.375rem; /* 150px */
+    margin-bottom: 0rem; 
+    margin-left: -0.625rem; /* -10px */
+}
+
+.panel-description {
+    font-size: 1.8rem; 
+    color: var(--color-text-light);
+    line-height: 1.2; 
+    margin-top: -7.5rem; /* -120px */
+}
+
+/* Navegación US | WORK */
+.panel-nav {
+    display: flex;
+    align-items: flex-start; 
+    gap: 0rem; 
+    background-color: transparent; 
+    padding-top: 0.625rem; /* 10px */
+    padding-bottom: 0rem; 
+    border-bottom: none; 
+    border-top: 0.0625rem solid var(--color-border-light); /* 1px */
+    flex-direction: column; 
+}
+
+/* Estilo de los botones US/WORK */
+.panel-nav-btn {
+    background: none;
+    border: none;
+    font-size: 2.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: var(--color-text-dark); 
+    text-transform: uppercase;
+    transition: color 0.3s; 
+    padding: 0.625rem 0; /* 10px */
+    line-height: 1;
+}
+
+.panel-nav-btn:hover {
+    opacity: 0.7;
+}
+
+/* Estado activo: cuando se pincha, cambia a rojo */
+.panel-nav-btn.active {
+    color: var(--color-primary); 
+    opacity: 1; 
+}
+
+/* ESTILO DE LA RAYA NEGRA HORIZONTAL */
+.panel-separator {
+    display: block; 
+    height: 0.1875rem; /* 3px */
+    background-color: var(--color-text-dark); 
+    margin: 0.3125rem 0; /* 5px */
+    width: 6.25rem; /* 100px */
+    align-self: flex-start; 
+}
+
+/* Contenido Dinámico (Texto US o Placeholders WORK) */
+.info-content {
+    margin-top: 1.875rem; /* 30px */
+    position: relative; 
+    z-index: 5; 
+    padding: 0rem; 
+}
+
+/* --- CLASES PARA EL CONTENIDO US --- */
+.content-us-title {
+    color: var(--color-primary);
+    text-transform: uppercase;
+    font-size: 1.6rem; 
+    display: block;
+    margin-bottom: 1.5625rem; /* 25px */
+    line-height: 1.2;
+}
+
+.content-us-fine-title {
+    font-weight: normal; 
+    line-height: 1.0; 
+    font-size: 4rem; 
+}
+
+.content-us-text {
+    font-size: 1rem; 
+    line-height: 1.6; 
+    margin-bottom: 1.5625rem; /* 25px */
+    color: var(--color-text-dark);
+    display: block;
+}
+
+/* --- NUEVOS ESTILOS PARA LA ANIMACIÓN (ACTUALIZADOS CON CONTADOR) --- */
+.animation-container-25 {
+    display: flex;
+    align-items: center; 
+    margin-bottom: 3.75rem; /* 60px */
+    margin-top: 2.5rem; /* 40px */
+}
+
+.anim-number {
+    font-size: 15vw; 
+    font-weight: bold;
+    color: var(--color-text-dark); 
+    line-height: 1; 
+    display: block;
+    transition: color 0.5s ease-out;
+    padding-right: 1.25rem; /* 20px */
+}
+
+/* Clase añadida por JS cuando el contador llega a 25 */
+.anim-number.is-final-color {
+    color: var(--color-primary); 
+}
+
+.anim-text {
+    font-size: 1.2rem; 
+    color: var(--color-text-dark);
+    display: block;
+    line-height: 1.2; 
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateX(1.25rem); /* 20px */
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+/* Clase añadida por JS para mostrar el texto */
+.anim-text.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+/* FIN NUEVOS ESTILOS PARA LA ANIMACIÓN */
+
+
+/* --- ESTILOS ESPECÍFICOS PARA LA REJILLA DE PROYECTOS (WORK) --- */
+.work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr)); /* 200px */
+    gap: 0.9375rem; /* 15px */
+    padding-bottom: 3.125rem; /* 50px */
+}
+
+/* Estilo para los botones de proyecto de WORK (el contenedor del cuadrado) */
+.work-item-btn {
+    width: 100%; 
+    aspect-ratio: 1 / 1; 
+    background-color: var(--color-primary);
+    border-radius: 0.3125rem; /* 5px */
+    border: none;
+    cursor: pointer;
+    overflow: hidden; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 0;
+    display: block;
+}
+
+.work-item-btn:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.2); /* 8px 20px */
+}
+
+/* Estilo para las miniaturas dentro del botón */
+.work-item-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    display: block;
+}
+
+
+/* --- ESTILOS BOTÓN DE CERRAR 'X' --- */
+.close-button {
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    z-index: 110; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    transition: opacity 0.3s ease-out;
+    padding: 0.625rem; /* 10px */
+}
+
+.close-icon { 
+    color: var(--color-text-dark); 
+    font-size: 1.5rem; /* 24px */
+    font-weight: normal; 
+    line-height: 1; 
+}
+
+.close-button:hover {
+    opacity: 0.6;
+}
+
+/* Posicionamiento específico para el botón de cerrar del Panel About */
+.info-panel .close-button#close-info-btn {
+    position: absolute;
+    top: 0.9375rem; /* 15px */
+    right: 0rem; 
+    z-index: 120; 
+}
+
+
+/* --- ESTILOS DEL POP-UP MODAL DE PROYECTOS (WORK) --- */
+.work-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility .3s;
+    backdrop-filter: blur(0.3125rem); /* 5px */
+}
+
+.work-modal.is-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: var(--color-background-white);
+    padding: 0rem; 
+    border-radius: 0.625rem; /* 10px */
+    max-width: 56.25rem; /* 900px */
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.4); /* 10px 30px */
+}
+
+/* Posicionamiento del botón de cerrar del Modal */
+.close-modal-btn {
+    position: absolute;
+    top: 0.9375rem; /* 15px */
+    right: 0.9375rem; /* 15px */
+    color: white; 
+}
+
+/* Estilo para la imagen completa dentro del modal (Añadida transición) */
+.work-full-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 0.625rem; /* 10px */
+    opacity: 0; /* Controlado por JS para la transición */
+    transition: opacity 0.3s ease-in-out; /* Transición suave de aparición */
+}
+
+/* --- ESTILOS PARA LOS BOTONES DE NAVEGACIÓN DEL MODAL (< >) --- */
+.modal-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 0.625rem 0.9375rem; /* 10px 15px */
+    cursor: pointer;
+    z-index: 110; 
+    font-size: 2rem;
+    transition: background-color 0.3s;
+    height: 3.75rem; /* 60px */
+    width: 2.5rem; /* 40px */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.3125rem; /* 5px */
+}
+
+.modal-nav-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.prev-btn {
+    left: 0.625rem; /* 10px */
+}
+
+.next-btn {
+    right: 0.625rem; /* 10px */
+}
+
+/* --- Estilo del Spinner de Carga --- */
+.modal-spinner {
+    border: 0.25rem solid rgba(0, 0, 0, 0.1); /* 4px */
+    border-top: 0.25rem solid var(--color-primary); /* 4px */
+    border-radius: 50%;
+    width: 2.5rem; /* 40px */
+    height: 2.5rem; /* 40px */
+    animation: spin 1s linear infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -1.25rem; /* -20px */
+    margin-left: -1.25rem; /* -20px */
+    display: none; /* Oculto por defecto, mostrado por JS */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design básico para móviles (768px y menos) */
+@media (max-width: 48rem) { /* 768px */
+    body {
+        padding-left: 0;
+        justify-content: center;
+        align-items: flex-end;
+        padding-bottom: 1.25rem; /* 20px */
+    }
+
+    .main-container {
+        width: 90%;
+        height: 18.75rem; /* 300px */
+    }
+
+    .info-panel {
+        width: 100vw;
+        padding: 0rem 2.5rem; /* 40px */
+    }
+    
+    /* Aseguramos que la X se vea bien en móvil */
+    .info-panel .close-button#close-info-btn {
+        top: 0.9375rem; /* 15px */
+        right: 2.5rem; /* 40px */
+    }
+
+    .video-control-btn {
+        bottom: 1.25rem; /* 20px */
+        right: 1.25rem; /* 20px */
+    }
+
+    /* Ajustes móviles para la animación */
+    .animation-container-25 {
+       flex-direction: column; 
+       align-items: flex-start;
+       margin-bottom: 1.875rem; /* 30px */
+    }
+    
+    .anim-number {
+        font-size: 5rem; /* Ajuste para móvil */
+        padding-right: 0;
+    }
+    
+    .anim-text {
+        font-size: 0.9rem; /* Ajuste para móvil */
+        margin-left: 0;
+        margin-top: 0.625rem; /* 10px */
+    }
+
+    .work-grid {
+        grid-template-columns: repeat(auto-fill, minmax(9.375rem, 1fr)); /* 150px */
+    }
+}
+
+/* Media query adicional para refinar el diseño en móviles muy pequeños (ej. iPhone SE) */
+@media (max-width: 30rem) { /* 480px */
+    .info-panel {
+        padding: 0rem 1.25rem; /* 20px */
+    }
+
+    .info-panel .close-button#close-info-btn {
+        right: 1.25rem; /* 20px */
+    }
+
+    .modal-nav-btn {
+        font-size: 1.5rem; 
+        height: 2.8125rem; /* 45px */
+        width: 2.1875rem; /* 35px */
+    }
+}
