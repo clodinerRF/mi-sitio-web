@@ -562,9 +562,8 @@ body {
 
     /* Ajustes móviles para la animación: AHORA APILADOS VERTICALMENTE Y ALINEADOS A LA IZQUIERDA */
     .animation-container-25 {
-       /* Eliminamos flexbox para que los elementos fluyan uno debajo del otro */
-       display: block; 
-       align-items: flex-start; /* No es necesario aquí */
+       flex-direction: column; /* Apilamos verticalmente */
+       align-items: flex-start; /* Alineamos a la izquierda */
        margin-bottom: 1.875rem; /* 30px */
     }
     
@@ -573,21 +572,17 @@ body {
         font-size: 70vw; 
         padding-right: 0rem; 
         line-height: 1; /* Ayuda a que quede pegado a la frase de abajo */
-        margin-bottom: 0.625rem; /* 10px de espacio debajo del 25 */
     }
     
     /* ESTILO PARA LA FRASE EN MÓVIL */
     .anim-text {
-        font-size: 1.2rem; /* Aumentado a 1.2rem para que sea más grande */
-        color: var(--color-text-dark);
-        display: block;
-        line-height: 1.2; 
-        text-transform: uppercase;
-        opacity: 0;
-        transform: translateX(1.25rem);
-        transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-        white-space: normal; /* Permitimos que el texto salte de línea en móvil */
-        width: 100%; /* Ocupa todo el ancho */
+        font-size: 1.2rem; /* Aumentamos el tamaño de la fuente como pediste (antes era 0.9rem) */
+        margin-left: 0;
+        margin-top: 0.125rem; /* 2px de espacio, lo subimos para acercarlo al número */
+        white-space: normal; /* Permitimos que salte de línea para que ocupe el ancho del 25 */
+        line-height: 1.2;
+        /* Eliminamos la transición que tenía en la versión de escritorio para mostrarse más rápido en móvil */
+        transform: none; 
     }
 
     .work-grid {
