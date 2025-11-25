@@ -27,6 +27,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const contentUs = document.getElementById('info-content-us');
     const contentWork = document.getElementById('info-content-work');
 
+    // --- Referencias a NUEVOS elementos de Audio y Botones (Música) ---
+    const musicAudio = document.getElementById('background-music');
+    const mainMusicBtn = document.getElementById('main-music-btn');
+    const panelMusicBtn = document.getElementById('panel-music-btn');
+
     // Variable global para almacenar el índice del proyecto actual
     let currentProjectIndex = 0; 
 
@@ -40,7 +45,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         </div>
         <span class="content-us-text">A lo largo de todo este tiempo hemos realizado proyectos de distintas envergaduras para nuestros clientes desde folletos (nacionales y territoriales), segmentaciones packaging, jingles, cuñas de radio, prensa, publicidad exterior, P.O.S., Centros Comerciales, cartelerías, hasta campañas de planes de comercio para televisión.</span>
         <span class="content-us-title content-us-fine-title">HACER GRANDES<br>CAMPAÑAS<br>ESTÁ MUY BIEN...<br>PERO CONSTRUIR<br>MARCA<br>TODOS LOS DÍAS,<br>ES VITAL.</span>
-        <span class="content-us-text">RAF toma su nombre de la aproximación fonética en español de rough. Y rough —boceto, borrador, apunte— es el momento donde las ideas toman forma por primera vez. Pensar antes de hacer, marca la diferencia. Un rough es más que un dibujo rápido; es la materialización de un plan. Nos obliga a considerar la composición, el mensaje y el objetivo final. El tiempo invertido en pensar se traduce directamente en mejores resultados cuando se realiza el trabajo. Además son una herramienta más de comunicación con el cliente. ¿A que suena bien?</span>
+        <span class="content-us-text">RAF toma su nombre de la aproximación fonética en español de rough. Y rough —boceto, borrador, apunte— es el momento donde las ideas toman forma por primera vez. Pensar antes de hacer, marca la diferencia. Un rough es más que un dibujo rápido; es el momento donde las ideas toman forma por primera vez. Pensar antes de hacer, marca la diferencia. Un rough es más que un dibujo rápido; es la materialización de un plan. Nos obliga a considerar la composición, el mensaje y el objetivo final. El tiempo invertido en pensar se traduce directamente en mejores resultados cuando se realiza el trabajo. Además son una herramienta más de comunicación con el cliente. ¿A que suena bien?</span>
     `;
 
     // Array de proyectos (con tu roscón y los placeholders)
@@ -108,24 +113,74 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
         });
     }
+
+    // --- Lógica de la Música (NUEVA) ---
     
+    // Función para manejar el estado mute/unmute de la música
+    function toggleMusicMute(isMuted) {
+        if (isMuted) {
+            musicAudio.pause();
+            // Añadimos la clase 'is-muted' a ambos botones para que CSS los tache
+            mainMusicBtn.classList.add('is-muted');
+            panelMusicBtn.classList.add('is-muted');
+            mainMusicBtn.setAttribute('aria-label', 'Reproducir música de fondo');
+            panelMusicBtn.setAttribute('aria-label', 'Reproducir música de fondo');
+            // Guardamos preferencia en localStorage para recordar la elección
+            localStorage.setItem('rafMusicMuted', 'true');
+        } else {
+            // Intentamos reproducir. En muchos navegadores modernos, esto solo funcionará tras una interacción del usuario.
+            musicAudio.play().catch(e => console.log("La reproducción automática de audio fue bloqueada.", e));
+            mainMusicBtn.classList.remove('is-muted');
+            panelMusicBtn.classList.remove('is-muted');
+            mainMusicBtn.setAttribute('aria-label', 'Pausar música de fondo');
+            panelMusicBtn.setAttribute('aria-label', 'Pausar música de fondo');
+            localStorage.setItem('rafMusicMuted', 'false');
+        }
+    }
+
+    // Lógica para alternar el mute cuando se pulsa cualquiera de los botones
+    function handleMusicButtonClick() {
+        // Usamos musicAudio.paused para determinar el estado actual
+        toggleMusicMute(!musicAudio.paused);
+    }
+    
+    // Asignamos listeners a los nuevos botones
+    if (mainMusicBtn && panelMusicBtn) {
+        mainMusicBtn.addEventListener('click', handleMusicButtonClick);
+        panelMusicBtn.addEventListener('click', handleMusicButtonClick);
+    }
+
+    // Cargamos el estado preferido del usuario al cargar la página
+    const savedMutedState = localStorage.getItem('rafMusicMuted');
+    if (savedMutedState === 'true') {
+        toggleMusicMute(true);
+    } else {
+        // Inicialmente intentamos que esté sonando si no hay preferencia guardada de mute
+        toggleMusicMute(false);
+    }
+
     // Funcionalidad de Giro de Tarjeta (sin cambios)
     if (mainContainer && contactLink && backBtn) {
         contactLink.addEventListener('click', () => { mainContainer.classList.add('flipped'); });
         backBtn.addEventListener('click', () => { mainContainer.classList.remove('flipped'); });
     }
 
-    // Funcionalidad del Panel de Información Lateral (sin cambios)
-    if (aboutLink && infoPanel && closeInfoBtn && mainContainer && video && playPauseBtn) {
+    // Funcionalidad del Panel de Información Lateral (ACTUALIZADO para ocultar botón de música principal)
+    if (aboutLink && infoPanel && closeInfoBtn && mainContainer && video && playPauseBtn && mainMusicBtn) {
         aboutLink.addEventListener('click', (e) => {
             e.preventDefault(); infoPanel.classList.add('is-active'); mainContainer.style.opacity = '0';
             video.pause(); playPauseBtn.textContent = '▶'; playPauseBtn.style.display = 'none';
+            // Ocultamos también el botón de música principal cuando abrimos el panel
+            mainMusicBtn.style.display = 'none';
+
             contentUs.style.display = 'none'; contentWork.style.display = 'none';
             navUsBtn.classList.remove('active'); navWorkBtn.classList.remove('active');
         });
         closeInfoBtn.addEventListener('click', () => {
             infoPanel.classList.remove('is-active'); mainContainer.style.opacity = '1';
-            video.play(); playPauseBtn.style.display = 'block'; playPauseBtn.textContent = 'Ⅱ';
+            video.play(); playPauseBtn.style.display = 'block'; 
+            mainMusicBtn.style.display = 'block'; // Mostramos el botón principal de nuevo
+            playPauseBtn.textContent = 'Ⅱ';
         });
     }
 
@@ -140,6 +195,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             navUsBtn.classList.remove('active'); navWorkBtn.classList.add('active');
         }
     }
+
     navUsBtn.addEventListener('click', () => switchPanelContent('us'));
     navWorkBtn.addEventListener('click', () => switchPanelContent('work'));
 

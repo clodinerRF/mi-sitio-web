@@ -83,6 +83,17 @@
             <button id="close-info-btn" class="close-button" aria-label="Cerrar panel de información">
                 <span class="close-icon">X</span>
             </button>
+            
+            <!-- BOTÓN DE MÚSICA DEL PANEL LATERAL (NUEVO) -->
+            <button id="panel-music-btn" class="music-control-btn panel-music-btn" aria-label="Pausar música de fondo">
+                <span class="music-icon">
+                    <!-- SVG para el panel lateral (gris/negro) -->
+                    <svg xmlns="www.w3.org" viewBox="0 0 24 24" fill="currentColor" width="24px" height="24px">
+                        <path d="M12 3v10.55a4 4 0 1 0 2 3.45V5h4V3h-6z"/>
+                    </svg>
+                </span>
+            </button>
+
         </div> 
         <!-- Fin Contenedor Wrapper Fijo -->
 
@@ -120,6 +131,22 @@
 
     <!-- Botón de Pausa/Reproducción en la esquina inferior derecha -->
     <button id="play-pause-btn" class="video-control-btn" aria-label="Pausar vídeo de fondo">Ⅱ</button>
+    
+    <!-- BOTÓN DE MÚSICA DE LA PANTALLA PRINCIPAL (NUEVO - Usa la misma clase visual que el de vídeo) -->
+    <button id="main-music-btn" class="video-control-btn" aria-label="Pausar música de fondo">
+        <span class="music-icon">
+            <!-- SVG para la pantalla principal (blanco) -->
+            <svg xmlns="www.w3.org" viewBox="0 0 24 24" fill="white" width="24px" height="24px">
+                <path d="M12 3v10.55a4 4 0 1 0 2 3.45V5h4V3h-6z"/>
+            </svg>
+        </span>
+    </button>
+
+    <!-- ETIQUETA DE AUDIO (NUEVA) -->
+    <audio id="background-music" loop>
+        <source src="assets/tu_musica.mp3" type="audio/mpeg">
+        Tu navegador no soporta la etiqueta de audio.
+    </audio>
 
     <!-- Enlace a nuestro archivo JavaScript -->
     <script src="script.js"></script>

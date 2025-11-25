@@ -120,8 +120,96 @@ body {
 .stripes-img { z-index: 1; width: 500%; height: auto; position: absolute; bottom: -2.5rem; /* -40px */ display: block; left: -25rem; /* -400px */ transform: rotate(-6deg); }
 .logo-img { position: absolute; bottom: -7.5rem; /* -120px */ left: 50%; transform: translateX(-50%); width: 15.625rem; /* 250px */ z-index: 20; transition: opacity 0.3s ease-out; }
 
-.video-control-btn { position: fixed; bottom: 2.5rem; /* 40px */ right: 2.5rem; /* 40px */ z-index: 30; background: none; border: none; color: white; cursor: pointer; padding: 0.625rem 0.9375rem; /* 10px 15px */ font-size: 1.5rem; background-color: rgba(0, 0, 0, 0.3); border-radius: 0.3125rem; /* 5px */ backdrop-filter: blur(0.125rem); /* 2px */ -webkit-backdrop-filter: blur(0.125rem); transition: background-color 0.3s; }
+/* ESTILO BASE PARA AMBOS BOTONES INFERIORES DERECHOS (Video y Musica) */
+.video-control-btn { 
+    position: fixed; 
+    bottom: 2.5rem; /* 40px */ 
+    z-index: 30; 
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    font-size: 1.5rem; 
+    background-color: rgba(0, 0, 0, 0.3); 
+    border-radius: 0.3125rem; /* 5px */ 
+    backdrop-filter: blur(0.125rem); /* 2px */ 
+    -webkit-backdrop-filter: blur(0.125rem); 
+    transition: background-color 0.3s; 
+    color: white; /* Color blanco para los iconos de ambos botones */
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    /* Dimensiones fijas para asegurar que ambos botones son idénticos */
+    width: 3.125rem; /* 50px */
+    height: 3.125rem; /* 50px */
+    padding: 0; /* Reseteamos padding */
+}
 .video-control-btn:hover { background-color: rgba(0, 0, 0, 0.6); }
+
+/* Posicionamiento específico del botón de Video */
+#play-pause-btn {
+    right: 2.5rem; /* 40px desde el borde */
+}
+
+/* Posicionamiento específico del botón de Musica principal (A su lado) */
+#main-music-btn {
+    /* Calculo: 40px (borde) + 50px (ancho btn video) + ~10px (gap) = ~100px = 6.25rem */
+    right: 6.25rem;
+}
+
+
+/* --- ESTILOS PARA LOS BOTONES DE MÚSICA (NUEVOS) --- */
+
+/* Estilos base compartidos para el botón de música del panel lateral */
+.music-control-btn {
+    background: none; border: none; cursor: pointer; z-index: 40;
+    transition: opacity 0.3s ease-out;
+    padding: 0.625rem; /* 10px */
+}
+
+/* Icono base: el SVG dentro del span. Usamos fill="currentColor" en HTML para controlarlo con CSS */
+.music-icon svg {
+    display: block;
+    line-height: 1;
+    position: relative;
+    /* Color por defecto para el botón principal (usa el color blanco de la clase .video-control-btn) */
+    fill: currentColor; 
+}
+
+/* Color específico para el icono del panel lateral (rojo oscuro/gris, como var(--color-primary)) */
+.panel-music-btn .music-icon svg {
+    fill: var(--color-text-dark); /* Usamos el gris/negro que quieres */
+}
+
+/* Clase añadida por JS para mutear */
+.is-muted .music-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 0.125rem; /* 2px de grosor para la línea */
+    transform: translateY(-50%) rotate(45deg); /* Línea diagonal */
+}
+
+/* El color de la línea depende del botón padre */
+
+/* Para el botón principal (clase .video-control-btn) -> Línea blanca */
+#main-music-btn.is-muted .music-icon::after {
+    background-color: white;
+}
+
+/* Para el botón del panel lateral (clase .panel-music-btn) -> Línea gris/negra */
+.panel-music-btn.is-muted .music-icon::after {
+     background-color: var(--color-text-dark); /* Usamos el gris/negro */
+}
+
+
+/* Posicionamiento específico del botón del panel lateral (arriba a la derecha) */
+.panel-music-btn {
+    position: absolute;
+    top: 0.9375rem; /* 15px */
+    right: 2.8125rem; /* 45px (para dejar espacio a la X que está a 0rem right) */
+}
 
 
 /* --- ESTILOS PARA LA NAVEGACIÓN INFERIOR (CONTACT | ABOUT) --- */
@@ -397,7 +485,6 @@ body {
     z-index: 120; 
 }
 
-
 /* --- ESTILOS DEL POP-UP MODAL DE PROYECTOS (WORK) --- */
 .work-modal {
     position: fixed;
@@ -476,12 +563,16 @@ body {
     background-color: rgba(0, 0, 0, 0.8);
 }
 
-.prev-btn {
+.modal-nav-btn.prev-btn {
     left: 0.625rem; /* 10px */
 }
 
-.next-btn {
+.modal-nav-btn.next-btn {
     right: 0.625rem; /* 10px */
+}
+
+.nav-icon {
+    line-height: 1;
 }
 
 /* --- Estilo del Spinner de Carga --- */
@@ -530,10 +621,22 @@ body {
         right: 2.5rem; /* 40px */
     }
 
-    .video-control-btn {
+    /* Reposicionamos los botones inferiores en móvil para que no colisionen */
+    #play-pause-btn {
         bottom: 1.25rem; /* 20px */
         right: 1.25rem; /* 20px */
     }
+    
+    #main-music-btn {
+        bottom: 1.25rem; /* 20px */
+        right: 4rem; /* Ajuste para que no colisione con el botón de vídeo en móvil */
+    }
+    
+    /* Aseguramos que el botón del panel lateral se vea bien en móvil */
+    .panel-music-btn {
+        right: 3.5rem; /* Ajuste para que no colisione con la X en móvil */
+    }
+
 
     /* Ajustes móviles para la animación: AHORA APILADOS VERTICALMENTE Y ALINEADOS A LA IZQUIERDA */
     .animation-container-25 {
@@ -571,6 +674,10 @@ body {
 
     .info-panel .close-button#close-info-btn {
         right: 1.25rem; /* 20px */
+    }
+
+    .panel-music-btn {
+        right: 2.25rem; /* 36px */
     }
 
     .modal-nav-btn {
