@@ -542,8 +542,9 @@ body {
        margin-bottom: 1.875rem; /* 30px */
     }
     
-    .anim-number {
-        font-size: 5rem; /* Ajuste para móvil */
+    /* TAMAÑO DUPLICADO Y ESPECIFICIDAD AÑADIDA */
+    .info-panel .anim-number {
+        font-size: 70vw; /* <-- VALOR ACTUALIZADO */
         padding-right: 0;
     }
     
@@ -572,5 +573,10 @@ body {
         font-size: 1.5rem; 
         height: 2.8125rem; /* 45px */
         width: 2.1875rem; /* 35px */
+    }
+    
+    /* TAMAÑO DUPLICADO Y ESPECIFICIDAD AÑADIDA */
+    .info-panel .anim-number {
+        font-size: 70vw; /* <-- VALOR ACTUALIZADO */
     }
 }
