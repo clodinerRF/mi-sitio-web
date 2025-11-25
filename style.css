@@ -508,17 +508,42 @@ body {
 /* Responsive Design básico para móviles (768px y menos) */
 @media (max-width: 48rem) { /* 768px */
     body {
+        /* Eliminamos el padding-left para centrar */
         padding-left: 0;
+        /* Centramos el body vertical y horizontalmente */
         justify-content: center;
-        align-items: flex-end;
-        padding-bottom: 1.25rem; /* 20px */
+        align-items: center; 
+        padding-bottom: 0; /* Aseguramos que no haya padding inferior */
     }
 
     .main-container {
-        width: 90%;
-        height: 18.75rem; /* 300px */
+        /* Hacemos el contenedor principal más pequeño como pediste */
+        width: 18rem; /* 288px, más pequeño que los 320px anteriores */
+        height: 16rem; /* 256px, más pequeño */
+        /* Lo centramos completamente */
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    /* Movemos los enlaces de navegación */
+    .nav-links {
+        /* Subimos la posición de 35px a 20px */
+        bottom: 1.25rem; /* 20px */
+        /* Aseguramos que siga centrado horizontalmente */
+        left: 50%; 
+        transform: translateX(-50%);
+        /* Reducimos el tamaño de la fuente para que sea más pequeño */
+        font-size: 1rem; 
     }
 
+    /* Reducimos la altura de la línea separadora */
+    .separator-line {
+        height: 1rem; /* 16px, más pequeña */
+    }
+
+    /* El resto de estilos del panel lateral y demás que ya tenías */
     .info-panel {
         width: 100vw;
         padding: 0rem 2.5rem; /* 40px */
