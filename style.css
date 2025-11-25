@@ -397,7 +397,6 @@ body {
     z-index: 120; 
 }
 
-
 /* --- ESTILOS DEL POP-UP MODAL DE PROYECTOS (WORK) --- */
 .work-modal {
     position: fixed;
@@ -535,26 +534,27 @@ body {
         right: 1.25rem; /* 20px */
     }
 
-    /* Ajustes móviles para la animación: AHORA EN FILA */
+    /* Ajustes móviles para la animación: AHORA APILADOS VERTICALMENTE Y ALINEADOS A LA IZQUIERDA */
     .animation-container-25 {
-       flex-direction: row; /* CAMBIADO A FILA */
-       align-items: center; /* Centrado verticalmente */
+       flex-direction: column; /* Apilamos verticalmente */
+       align-items: flex-start; /* Alineamos a la izquierda */
        margin-bottom: 1.875rem; /* 30px */
     }
     
     /* TAMAÑO MUCHO MÁS GRANDE */
     .info-panel .anim-number {
-        font-size: 70vw; /* <-- VALOR ACTUALIZADO */
-        padding-right: 0.5rem; /* Pequeño espacio a la derecha */
+        font-size: 70vw; 
+        padding-right: 0rem; 
+        line-height: 1; /* Ayuda a que quede pegado a la frase de abajo */
     }
     
     /* ESTILO PARA LA FRASE EN MÓVIL */
     .anim-text {
-        font-size: 0.7rem; /* Ajuste para móvil para que quepa en una línea */
+        font-size: 0.9rem; 
         margin-left: 0;
-        margin-top: 0; /* Eliminamos el margin-top que teníamos en desktop */
-        line-height: 1; /* Aseguramos que sea una línea compacta */
-        white-space: nowrap; /* Forzar a una sola línea si es posible con el font-size */
+        margin-top: 0.3125rem; /* 5px de espacio entre el número y la frase */
+        white-space: nowrap; /* Mantenemos esto para que no salte de línea */
+        line-height: 1;
     }
 
     .work-grid {
@@ -580,11 +580,6 @@ body {
     
     /* TAMAÑO MUCHO MÁS GRANDE */
     .info-panel .anim-number {
-        font-size: 70vw; /* <-- VALOR ACTUALIZADO */
-    }
-    
-    /* Aseguramos que el texto siga siendo pequeño y en una línea */
-    .info-panel .anim-text {
-        font-size: 0.6rem;
+        font-size: 70vw;
     }
 }
