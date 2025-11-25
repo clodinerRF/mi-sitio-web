@@ -116,6 +116,19 @@ body {
 .video-background { position: fixed; right: 0; bottom: 0; min-width: 100%; min-height: 100%; }
 .video-background video { min-width: 100%; min-height: 100%; width: auto; height: auto; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
 
+/* Oculta los controles nativos del navegador en iOS/Android */
+.force-controls-off::-webkit-media-controls {
+    display: none !important;
+}
+
+.force-controls-off::--webkit-media-controls-play-button {
+    display: none !important;
+}
+
+.force-controls-off::--webkit-media-controls-enclosure {
+    display: none !important;
+}
+
 .graphics-area { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; overflow: hidden; }
 .stripes-img { z-index: 1; width: 500%; height: auto; position: absolute; bottom: -2.5rem; /* -40px */ display: block; left: -25rem; /* -400px */ transform: rotate(-6deg); }
 .logo-img { position: absolute; bottom: -7.5rem; /* -120px */ left: 50%; transform: translateX(-50%); width: 15.625rem; /* 250px */ z-index: 20; transition: opacity 0.3s ease-out; }
@@ -152,7 +165,6 @@ body {
 
 /* Posicionamiento específico del botón de Musica principal (A su lado) */
 #main-music-btn {
-    /* Calculo: 40px (borde) + 50px (ancho btn video) + ~10px (gap) = ~100px = 6.25rem */
     right: 6.25rem;
 }
 
@@ -407,7 +419,6 @@ body {
     opacity: 0;
     transform: translateX(1.25rem); /* 20px */
     transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-    /* Importante para que el texto pueda saltar de línea en móvil */
     white-space: normal; 
 }
 
@@ -603,8 +614,8 @@ body {
     body {
         padding-left: 0;
         justify-content: center;
-        align-items: flex-end;
-        padding-bottom: 1.25rem; /* 20px */
+        align-items: center; /* MODIFICADO: Centra verticalmente el contenido principal */
+        padding-bottom: 0rem; /* MODIFICADO: Eliminamos el padding inferior */
     }
 
     .main-container {
@@ -619,7 +630,6 @@ body {
     
     /* SOLUCION 1: Panel CONTACT/ABOUT centrado y más pequeño */
     .nav-links {
-        /* Ya está centrado horizontalmente con left: 50% y transform: translateX(-50%) */
         width: 80%; /* Hacemos el contenedor más pequeño */
         justify-content: center; /* Centramos el contenido dentro de ese ancho más pequeño */
         font-size: 1rem; /* Reducimos el tamaño de la fuente */
@@ -630,8 +640,6 @@ body {
     }
 
     /* SOLUCION 2: Centrar el SVG de la nota musical en su botón (el HTML ya usa SVG) */
-    /* La clase .video-control-btn ya tiene display: flex y justify-content: center */
-    /* Lo que necesitamos es asegurarnos de que el SVG use el 100% del espacio del span */
     .music-icon svg {
         width: 100%;
         height: 100%;
