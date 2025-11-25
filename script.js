@@ -35,7 +35,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
         <span class="content-us-title content-us-fine-title">NO HAY TRABAJO<br>PEQUEÑO<br>HAY TRABAJO<br>BIEN HECHO<br>O MAL HECHO</span>
         <div class="animation-container-25">
             <span class="anim-number" id="animated-number">0</span>
-            <span class="anim-text" id="animated-text">AÑOS<br>DE EXPERIENCIA<br>EN RETAIL<br>Y DISTRIBUCIÓN</span>
+            <!-- TEXTO ACTUALIZADO PARA QUE QUEDE EN UNA LÍNEA EN MÓVIL -->
+            <span class="anim-text" id="animated-text">AÑOS DE EXPERIENCIA EN RETAIL Y DISTRIBUCIÓN</span>
         </div>
         <span class="content-us-text">A lo largo de todo este tiempo hemos realizado proyectos de distintas envergaduras para nuestros clientes desde folletos (nacionales y territoriales), segmentaciones packaging, jingles, cuñas de radio, prensa, publicidad exterior, P.O.S., Centros Comerciales, cartelerías, hasta campañas de planes de comercio para televisión.</span>
         <span class="content-us-title content-us-fine-title">HACER GRANDES<br>CAMPAÑAS<br>ESTÁ MUY BIEN...<br>PERO CONSTRUIR<br>MARCA<br>TODOS LOS DÍAS,<br>ES VITAL.</span>
@@ -107,7 +108,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
         });
     }
-
+    
     // Funcionalidad de Giro de Tarjeta (sin cambios)
     if (mainContainer && contactLink && backBtn) {
         contactLink.addEventListener('click', () => { mainContainer.classList.add('flipped'); });
