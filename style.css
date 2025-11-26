@@ -612,7 +612,7 @@ body {
 
 /* MEDIA QUERIES EXCLUSIVAS PARA MÓVILES (Max-width 768px) */
 @media (max-width: 48rem) { /* 768px */
-    /* -> AQUI HEMOS CAMBIADO EL VALOR DE 0.80 a 0.90 <- */
+    /* AQUI: Escala de la tarjeta principal */
     :root { --escala-movil: 0.90; } 
 
     body {
@@ -678,7 +678,7 @@ body {
 
     /* TAMAÑO MUCHO MÁS GRANDE */
     .info-panel .anim-number {
-        font-size: 15rem; /* MUCHO MÁS GRANDE: 240px */
+        font-size: 18rem; /* VALOR AMPLIADO: 288px */
         padding-right: 0rem; 
         line-height: 1; /* Ayuda a que quede pegado a la frase de abajo */
     }
@@ -688,9 +688,9 @@ body {
         font-size: 0.9rem; 
         margin-left: 0;
         margin-top: 0.3125rem; /* 5px de espacio: se acerca más al 25 */
-        white-space: normal; /* Permitimos el salto de línea */
+        /* Eliminamos white-space: normal; para forzar las 2 líneas con el <br> del HTML */
         line-height: 1.2;
-        width: 15rem; /* Ancho de 240px, similar al tamaño visual del número */
+        width: 18rem; /* VALOR AMPLIADO: 288px */
     }
 
     .work-grid {
@@ -700,7 +700,7 @@ body {
 
 /* Media query adicional para refinar el diseño en móviles muy pequeños (ej. iPhone SE) */
 @media (max-width: 30rem) { /* 480px */
-     /* -> AQUI HEMOS CAMBIADO EL VALOR DE 0.70 a 0.80 <- */
+     /* AQUI: Escala de la tarjeta principal en móviles muy pequeños */
     :root {
         --escala-movil: 0.80; 
     }
@@ -725,11 +725,11 @@ body {
 
     /* Ajuste de tamaño para el número en pantallas muy pequeñas */
     .info-panel .anim-number {
-        font-size: 10rem; 
+        font-size: 14rem; 
     }
     
     /* Ajuste de tamaño para la frase en pantallas muy pequeñas */
     .anim-text {
-        width: 10rem; /* Ancho ajustado */
+        width: 14rem; 
     }
 }
