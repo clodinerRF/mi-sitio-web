@@ -691,11 +691,11 @@ body {
         line-height: 1; /* Ayuda a que quede pegado a la frase de abajo */
     }
     
-    /* ESTILO PARA LA FRASE EN MÓVIL (Ahora en 2 líneas, debajo y con ancho del 100%) */
+    /* ESTILO PARA LA FRASE EN MÓVIL (Ahora en 2 líneas, más pegada al 25) */
     .anim-text {
         font-size: 0.9rem; 
         margin-left: 0;
-        margin-top: 0.3125rem; /* 5px de espacio: se acerca más al 25 */
+        margin-top: 0.1rem; /* Margen superior muy pequeño para unirlo al 25 */
         white-space: normal; /* Permitimos el salto de línea */
         width: 100%; /* Ancho completo */
         line-height: 1.2;
