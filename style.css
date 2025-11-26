@@ -244,7 +244,7 @@ body {
     font-weight: 500; 
     cursor: pointer;
     text-transform: uppercase;
-    transition: opacity 0.3s;
+    transition: color 0.3s; 
 }
 
 .nav-link:hover {
@@ -405,7 +405,6 @@ body {
     transition: color 0.5s ease-out;
     padding-right: 1.25rem; /* 20px */
 }
-
 /* Clase añadida por JS cuando el contador llega a 25 */
 .anim-number.is-final-color {
     color: var(--color-primary); 
@@ -612,7 +611,7 @@ body {
 
 /* MEDIA QUERIES EXCLUSIVAS PARA MÓVILES (Max-width 768px) */
 @media (max-width: 48rem) { /* 768px */
-    /* AQUI: Escala de la tarjeta principal */
+    /* -> AQUI HEMOS CAMBIADO EL VALOR DE 0.80 a 0.90 <- */
     :root { --escala-movil: 0.90; } 
 
     body {
@@ -678,19 +677,19 @@ body {
 
     /* TAMAÑO MUCHO MÁS GRANDE */
     .info-panel .anim-number {
-        font-size: 18rem; /* VALOR AMPLIADO: 288px */
+        font-size: 15rem; /* MUCHO MÁS GRANDE: 240px */
         padding-right: 0rem; 
         line-height: 1; /* Ayuda a que quede pegado a la frase de abajo */
     }
     
-    /* ESTILO PARA LA FRASE EN MÓVIL (Ahora en 2 líneas, debajo y con ancho similar al 25) */
+    /* ESTILO PARA LA FRASE EN MÓVIL (Ahora en 2 líneas, debajo y con ancho del 100%) */
     .anim-text {
         font-size: 0.9rem; 
         margin-left: 0;
         margin-top: 0.3125rem; /* 5px de espacio: se acerca más al 25 */
-        /* Eliminamos white-space: normal; para forzar las 2 líneas con el <br> del HTML */
+        white-space: normal; /* Permitimos el salto de línea */
+        width: 100%; /* Ancho completo */
         line-height: 1.2;
-        width: 18rem; /* VALOR AMPLIADO: 288px */
     }
 
     .work-grid {
@@ -700,7 +699,7 @@ body {
 
 /* Media query adicional para refinar el diseño en móviles muy pequeños (ej. iPhone SE) */
 @media (max-width: 30rem) { /* 480px */
-     /* AQUI: Escala de la tarjeta principal en móviles muy pequeños */
+     /* -> AQUI HEMOS CAMBIADO EL VALOR DE 0.70 a 0.80 <- */
     :root {
         --escala-movil: 0.80; 
     }
@@ -725,11 +724,11 @@ body {
 
     /* Ajuste de tamaño para el número en pantallas muy pequeñas */
     .info-panel .anim-number {
-        font-size: 14rem; 
+        font-size: 10rem; 
     }
     
     /* Ajuste de tamaño para la frase en pantallas muy pequeñas */
     .anim-text {
-        width: 14rem; 
+        width: 100%; /* Ancho completo */
     }
 }

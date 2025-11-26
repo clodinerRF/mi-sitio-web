@@ -138,8 +138,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 playPauseBtn.setAttribute('aria-label', 'Pausar vídeo de fondo');
             } else {
                 video.pause();
-                playPauseBtn.textContent = '▶';
-                playPauseBtn.setAttribute('aria-label', 'Reproducir vídeo de fondo');
             }
         });
     }
@@ -234,8 +232,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (contentType === 'us') {
             contentUs.style.display = 'block'; contentWork.style.display = 'none';
             navUsBtn.classList.add('active'); navWorkBtn.classList.remove('active');
-            // runCounterAnimation(); // Ya no llamamos a esto directamente
-            if (animContainer) observer.observe(animContainer); // Empezamos a observar al cambiar a US
+            
+            // --- LÓGICA DE REINICIO DE ANIMACIÓN AÑADIDA AQUÍ ---
+            hasAnimated = false; // Reinicia la bandera para permitir la animación de nuevo
+            if (animContainer) {
+                observer.unobserve(animContainer); // Dejamos de observar brevemente
+                observer.observe(animContainer); // Volvemos a observar para que se dispare
+            }
+            // ---------------------------------------------------
+            
         } else if (contentType === 'work') {
             contentUs.style.display = 'none'; contentWork.style.display = 'block';
             navUsBtn.classList.remove('active'); navWorkBtn.classList.add('active');
