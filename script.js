@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const navWorkBtn = document.getElementById('nav-work');
     const contentUs = document.getElementById('info-content-us');
     const contentWork = document.getElementById('info-content-work');
-    const animContainer = document.querySelector('.animation-container-25'); // Referencia corregida a animContainer
+    const animationContainer = document.querySelector('.animation-container-25'); // Nueva referencia al contenedor de animación
     
     // --- Referencias a NUEVOS elementos de Audio y Botones (Música) ---
     const musicAudio = document.getElementById('background-music');
@@ -138,11 +138,31 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
         });
     }, {
-        root: infoPanel, // Observamos dentro del panel
+        root: null, // Observa con respecto al viewport (ventana del navegador)
         rootMargin: '0px',
         threshold: 0.5 // Se dispara cuando el 50% del elemento es visible
     });
 
+    // Observamos el contenedor de la animación si existe
+    const animContainer = document.getElementById('animation-container-25');
+    if (animContainer) {
+        observer.observe(animContainer);
+    }
+
+    // Funcionalidad del Video (sin cambios)
+    if (playPauseBtn && video) {
+        playPauseBtn.addEventListener('click', () => {
+            if (video.paused) {
+                video.play();
+                playPauseBtn.textContent = 'Ⅱ';
+                playPauseBtn.setAttribute('aria-label', 'Pausar vídeo de fondo');
+            } else {
+                video.pause();
+                playPauseBtn.textContent = '▶';
+                playPauseBtn.setAttribute('aria-label', 'Reproducir vídeo de fondo');
+            }
+        });
+    }
 
     // --- Lógica de la Música (NUEVA) ---
     
