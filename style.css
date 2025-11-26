@@ -6,7 +6,7 @@
     --color-background-white: #fff;
     --color-border-light: #eee;
     font-size: 16px; /* Establece 1rem = 16px como base (se puede omitir, es el valor por defecto) */
-    --escala-movil: 0.75; /* Variable para la escala en movil (75% del tamaño original) */
+    --escala-movil: 0.90; /* Variable para la escala en movil (90% del tamaño original) */
 }
 
 * {
@@ -216,7 +216,6 @@ body {
      background-color: var(--color-text-dark); /* Usamos el gris/negro */
 }
 
-
 /* Posicionamiento específico del botón del panel lateral (arriba a la derecha) */
 .panel-music-btn {
     position: absolute;
@@ -346,13 +345,14 @@ body {
     opacity: 1; 
 }
 
-/* ESTILO DE LA RAYA NEGRA HORIZONTAL */
+/* ESTILO DE LA RAYA NEGRA HORIZONTAL (Ancho ajustado para alinearse con el final de la 'K' de WORK) */
 .panel-separator {
     display: block; 
     height: 0.1875rem; /* 3px */
     background-color: var(--color-text-dark); 
     margin: 0.3125rem 0; /* 5px */
-    width: 6.25rem; /* 100px */
+    /* ANCHO FINAL AJUSTADO */
+    width: 10.5rem; /* 168px */
     align-self: flex-start; 
 }
 
@@ -559,7 +559,6 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
     border: none;
-    padding: 0.625rem 0.9375rem; /* 10px 15px */
     cursor: pointer;
     z-index: 110; 
     font-size: 2rem;
@@ -667,21 +666,18 @@ body {
     }
     
     /* ----------------------------------------------------- */
-    /* AJUSTES SOLICITADOS PARA ANIMACION 25 (MAXIMIZADO Y REPOSICIONADO) */
+    /* AJUSTES SOLICITADOS PARA ANIMACION 25 (MAXIMIZADO) */
     /* ----------------------------------------------------- */
     .animation-container-25 {
        flex-direction: column; /* Apilamos verticalmente */
        align-items: flex-start; /* Alineamos a la izquierda */
+       margin-bottom: 1.875rem; /* 30px */
        
-       /* >>>>>> MARGEN SUPERIOR AJUSTADO <<<<<< */
-       margin-top: -3.125rem; /* -50px, subido para centrar entre textos */
-       /* >>>>>> FIN MARGEN SUPERIOR AJUSTADO <<<<<< */
-
-       /* >>>>>> ESTILOS DE ESCALADO <<<<<< */
-       transform: scale(1.4); /* Escalamos el conjunto completo */
+       /* >>>>>> NUEVOS ESTILOS DE ESCALADO <<<<<< */
+       transform: scale(1.4); /* Escalamos el conjunto completo (ajústalo si es mucho/poco) */
        transform-origin: top left; /* El punto de origen del escalado es arriba a la izquierda */
-       margin-bottom: 5rem; /* Compensamos el margen inferior tras el zoom */
-       /* >>>>>> FIN ESTILOS DE ESCALADO <<<<<< */
+       margin-bottom: 5rem; /* Compensamos el margen inferior tras el zoom para evitar solapamientos */
+       /* >>>>>> FIN NUEVOS ESTILOS <<<<<< */
     }
 
     /* TAMAÑO MUCHO MÁS GRANDE */
@@ -689,16 +685,13 @@ body {
         font-size: 15rem; /* MUCHO MÁS GRANDE: 240px */
         padding-right: 0rem; 
         line-height: 1; /* Ayuda a que quede pegado a la frase de abajo */
-        /* >>>>>> MARGEN INFERIOR NEGATIVO AÑADIDO <<<<<< */
-        margin-bottom: -1rem; /* Sube el número para acercarlo a la frase */
-        /* >>>>>> FIN MARGEN INFERIOR NEGATIVO AÑADIDO <<<<<< */
     }
     
-    /* ESTILO PARA LA FRASE EN MÓVIL (Ahora en 2 líneas, más pegada al 25) */
+    /* ESTILO PARA LA FRASE EN MÓVIL (Ahora en 2 líneas, debajo y con ancho del 100%) */
     .anim-text {
         font-size: 0.9rem; 
         margin-left: 0;
-        margin-top: 0.1rem; /* Margen superior muy pequeño para unirlo al 25 */
+        margin-top: 0.3125rem; /* 5px de espacio: se acerca más al 25 */
         white-space: normal; /* Permitimos el salto de línea */
         width: 100%; /* Ancho completo */
         line-height: 1.2;
