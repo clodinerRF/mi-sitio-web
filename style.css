@@ -612,15 +612,15 @@ body {
 /* MEDIA QUERIES EXCLUSIVAS PARA MÓVILES (Max-width 768px) */
 @media (max-width: 48rem) { /* 768px */
     body {
-        padding-left: 0;
-        justify-content: center;
-        align-items: center; /* MODIFICADO: Centra verticalmente el contenido principal */
-        padding-bottom: 0rem; /* MODIFICADO: Eliminamos el padding inferior */
+        padding-left: 0 !important; /* Reseteamos el padding de escritorio */
+        justify-content: center; /* Centrado horizontal */
+        align-items: center; /* Centrado vertical */
+        padding-bottom: 0rem; 
     }
 
     .main-container {
-        width: 90%;
-        height: 18.75rem; /* 300px */
+        width: 15rem; /* 240px de ancho */
+        height: 15rem; /* 240px de alto -> Cuadrado y más pequeño */
     }
 
     .info-panel {

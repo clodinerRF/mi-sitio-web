@@ -113,8 +113,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
         });
     }
-
-    // --- Lógica de la Música (NUEVA) ---
+// --- Lógica de la Música (NUEVA) ---
     
     // Función para manejar el estado mute/unmute de la música
     function toggleMusicMute(isMuted) {
