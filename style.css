@@ -689,6 +689,9 @@ body {
         font-size: 15rem; /* MUCHO MÁS GRANDE: 240px */
         padding-right: 0rem; 
         line-height: 1; /* Ayuda a que quede pegado a la frase de abajo */
+        /* >>>>>> MARGEN INFERIOR NEGATIVO AÑADIDO <<<<<< */
+        margin-bottom: -1rem; /* Sube el número para acercarlo a la frase */
+        /* >>>>>> FIN MARGEN INFERIOR NEGATIVO AÑADIDO <<<<<< */
     }
     
     /* ESTILO PARA LA FRASE EN MÓVIL (Ahora en 2 líneas, más pegada al 25) */
