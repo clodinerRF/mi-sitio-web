@@ -114,8 +114,7 @@ body {
 
 /* --- Estilos de Gráficos (Video, Logos, etc.) --- */
 
-.video-background { position: fixed; right: 0; bottom: 0; min-width: 100%; min-height: 100%; }
-.video-background video { min-width: 100%; min-height: 100%; width: auto; height: auto; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+/* REGLAS ELIMINADAS: El video ahora está dentro del panel About */
 
 /* Oculta los controles nativos del navegador en iOS/Android */
 .force-controls-off::-webkit-media-controls {
@@ -272,6 +271,24 @@ body {
     padding: 0rem 5rem; /* 80px */
     overflow-y: auto; /* Permite el scroll */
 }
+
+/* REGLAS PARA POSICIONAR EL VÍDEO DENTRO DEL PANEL ABOUT */
+.video-placeholder {
+    width: 100%;
+    height: 100%; 
+    position: absolute; 
+    top: 10rem; /* Ajusta este valor para que quede justo debajo de tu cabecera fija */
+    left: 0;
+    overflow: hidden;
+    z-index: 0; /* Asegura que esté detrás de los contenidos US/WORK */
+}
+
+.video-placeholder video {
+    width: 100%;
+    height: auto;
+    object-fit: cover; 
+}
+
 
 .info-panel.is-active {
     transform: translateX(0); 
@@ -637,7 +654,7 @@ body {
     }
     
     /* Aseguramos que el contenido del panel no tenga escalas raras */
-    .sticky-panel-header, .info-content {
+    .sticky-panel-header, .info-content, .video-placeholder {
          transform: scale(1); 
     }
 
