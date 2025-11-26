@@ -6,6 +6,7 @@
     --color-background-white: #fff;
     --color-border-light: #eee;
     font-size: 16px; /* Establece 1rem = 16px como base (se puede omitir, es el valor por defecto) */
+    --escala-movil: 0.75; /* Variable para la escala en movil (75% del tamaño original) */
 }
 
 * {
@@ -20,7 +21,7 @@ body {
     display: flex; 
     align-items: center; 
     justify-content: flex-start; 
-    padding-left: 9.375rem; /* 150px convertido a rem */
+    padding-left: 9.375rem; /* 150px convertido a rem (Version Escritorio) */
     height: 100vh; 
     transition: padding-left 0.3s; 
     background-color: var(--color-background-white);
@@ -34,7 +35,7 @@ body {
     z-index: 10;
     position: relative; 
     perspective: 1000px; 
-    transition: opacity 0.3s; 
+    transition: opacity 0.3s, transform 0.3s ease-out; /* Añadida transición para la escala */
 }
 
 /* Contenedor interno que rota 180 grados */
@@ -612,37 +613,31 @@ body {
 /* MEDIA QUERIES EXCLUSIVAS PARA MÓVILES (Max-width 768px) */
 @media (max-width: 48rem) { /* 768px */
     body {
-        padding-left: 0 !important; /* Reseteamos el padding de escritorio */
-        justify-content: center; /* Centrado horizontal */
-        align-items: center; /* Centrado vertical */
-        padding-bottom: 0rem; 
+        /* Eliminamos el padding izquierdo y centramos el contenido principal */
+        padding-left: 0 !important; 
+        justify-content: center; 
+        align-items: center;
     }
-
+    
+    /* Aplicamos la escala al contenedor principal para que mantenga las proporciones */
     .main-container {
-        width: 15rem; /* 240px de ancho */
-        height: 15rem; /* 240px de alto -> Cuadrado y más pequeño */
+        /* Usamos transform: scale() para mantener las proporciones */
+        transform: scale(var(--escala-movil)); 
+        /* Ajustamos el margen superior para que no quede demasiado pegado al borde virtual escalado */
+        margin-top: 2rem; 
     }
 
+    /* El panel lateral debe ignorar la escala y ocupar toda la pantalla */
     .info-panel {
         width: 100vw;
         padding: 0rem 2.5rem; /* 40px */
+        /* Reseteamos cualquier posible escala que pudiera heredar si estuviera dentro del main-container */
+        transform: translateX(100%) scale(1) !important; 
     }
     
-    /* SOLUCION 1: Panel CONTACT/ABOUT centrado y más pequeño */
-    .nav-links {
-        width: 80%; /* Hacemos el contenedor más pequeño */
-        justify-content: center; /* Centramos el contenido dentro de ese ancho más pequeño */
-        font-size: 1rem; /* Reducimos el tamaño de la fuente */
-    }
-
-    .separator-line {
-        height: 1rem; /* Hacemos la línea separadora más pequeña */
-    }
-
-    /* SOLUCION 2: Centrar el SVG de la nota musical en su botón (el HTML ya usa SVG) */
-    .music-icon svg {
-        width: 100%;
-        height: 100%;
+    /* El contenido del panel lateral también debe resetearse si hereda escala */
+    .sticky-panel-header, .info-content {
+         transform: scale(1) !important; 
     }
 
     /* Aseguramos que la X se vea bien en móvil */
@@ -666,32 +661,11 @@ body {
     .panel-music-btn {
         right: 3.5rem; /* Ajuste para que no colisione con la X en móvil */
     }
-
-
-    /* SOLUCION 3: Ajustes animación US/WORK */
-    .animation-container-25 {
-       flex-direction: column; /* Apilamos verticalmente */
-       align-items: flex-start; /* Alineamos a la izquierda */
-       margin-bottom: 1.875rem; /* 30px */
-    }
     
-    /* TAMAÑO MUCHO MÁS GRANDE */
-    .info-panel .anim-number {
-        font-size: 70vw; 
-        padding-right: 0rem; 
-        line-height: 1; /* Ayuda a que quede pegado a la frase de abajo */
-    }
+    /* Ajustes para que el texto de US/WORK no se escale mal */
+    .anim-number { font-size: 4rem; padding-right: 0.5rem; } /* Ajuste de tamaño en móvil */
+    .anim-text { font-size: 0.8rem; margin-top: 0; } /* Ajuste de tamaño en móvil */
     
-    /* ESTILO PARA LA FRASE EN MÓVIL (Ahora en 2 líneas) */
-    .anim-text {
-        font-size: 0.9rem; 
-        margin-left: 0;
-        margin-top: 0.3125rem; /* 5px de espacio: se acerca más al 25 */
-        white-space: normal; /* Permitimos el salto de línea */
-        line-height: 1.2;
-        width: 70vw; /* Aproximamos el ancho al del contador 25 (70vw) */
-    }
-
     .work-grid {
         grid-template-columns: repeat(auto-fill, minmax(9.375rem, 1fr)); /* 150px */
     }
@@ -699,6 +673,11 @@ body {
 
 /* Media query adicional para refinar el diseño en móviles muy pequeños (ej. iPhone SE) */
 @media (max-width: 30rem) { /* 480px */
+     /* Reducimos un poco más la escala para pantallas muy pequeñas */
+    :root {
+        --escala-movil: 0.65; /* 65% para móviles muy pequeños */
+    }
+
     .info-panel {
         padding: 0rem 1.25rem; /* 20px */
     }
@@ -715,10 +694,5 @@ body {
         font-size: 1.5rem; 
         height: 2.8125rem; /* 45px */
         width: 2.1875rem; /* 35px */
-    }
-    
-    /* TAMAÑO MUCHO MÁS GRANDE */
-    .info-panel .anim-number {
-        font-size: 70vw;
     }
 }
