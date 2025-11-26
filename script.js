@@ -32,10 +32,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const musicAudio = document.getElementById('background-music');
     const mainMusicBtn = document.getElementById('main-music-btn');
     const panelMusicBtn = document.getElementById('panel-music-btn');
-    
-    // NUEVA REFERENCIA AL VIDEO DEL PANEL
-    const panelVideo = document.getElementById('panel-background-video');
-
 
     // REFERENCIAS Y LÓGICA NUEVA PARA MEDIR LA LÍNEA
     const workTextSpan = document.getElementById('work-text-span');
@@ -141,10 +137,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 runCounterAnimation();
             }
         });
-    }, { threshold: 0.5 }); // El 50% del elemento debe estar visible
+    }, {
+        root: null, // Observa con respecto al viewport (ventana del navegador)
+        rootMargin: '0px',
+        threshold: 0.5 // Se dispara cuando el 50% del elemento es visible
+    });
 
-    // Lógica para alternar el play/pause del video (Existente)
-    if (video && playPauseBtn) {
+    // Observamos el contenedor de la animación si existe
+    const animContainer = document.getElementById('animation-container-25');
+    if (animContainer) {
+        observer.observe(animContainer);
+    }
+
+    // Funcionalidad del Video (sin cambios)
+    if (playPauseBtn && video) {
         playPauseBtn.addEventListener('click', () => {
             if (video.paused) {
                 video.play();
@@ -209,102 +215,58 @@ document.addEventListener('DOMContentLoaded', (event) => {
         backBtn.addEventListener('click', () => { mainContainer.classList.remove('flipped'); });
     }
 
-    // Funcionalidad del Panel de Información Lateral (ACTUALIZADO con lógica de video en móvil)
+    // Funcionalidad del Panel de Información Lateral (ACTUALIZADO para ocultar botón de música principal)
     if (aboutLink && infoPanel && closeInfoBtn && mainContainer && video && playPauseBtn && mainMusicBtn) {
         aboutLink.addEventListener('click', (e) => {
-            e.preventDefault(); 
-            infoPanel.classList.add('is-active'); 
-            mainContainer.style.opacity = '0';
-
-            // Pausamos el video principal, ocultamos botones de control
-            video.pause(); 
-            playPauseBtn.textContent = '▶'; 
-            playPauseBtn.style.display = 'none';
+            e.preventDefault(); infoPanel.classList.add('is-active'); mainContainer.style.opacity = '0';
+            video.pause(); playPauseBtn.textContent = '▶'; playPauseBtn.style.display = 'none';
+            // Ocultamos también el botón de música principal cuando abrimos el panel
             mainMusicBtn.style.display = 'none';
 
-            // Ocultamos el contenido por defecto
-            contentUs.style.display = 'none'; 
-            contentWork.style.display = 'none';
-            navUsBtn.classList.remove('active'); 
-            navWorkBtn.classList.remove('active');
+            contentUs.style.display = 'none'; contentWork.style.display = 'none';
+            navUsBtn.classList.remove('active'); navWorkBtn.classList.remove('active');
 
-            // NUEVO: Intentar reproducir el video del panel si es móvil (ancho <= 768px)
-            if (window.innerWidth <= 768 && panelVideo) {
-                 panelVideo.play().catch(e => console.log("Error al reproducir video del panel", e));
-            }
-            
             // -----------------------------------------------------
             // NUEVA LOGICA: Observar la animación cuando se abre el panel
             // -----------------------------------------------------
-            // Usamos animationContainer que es la referencia correcta
-            if (animationContainer) {
+            if (animContainer) {
                  // Si el panel de US está activo (por defecto no), empezamos a observar
-                 observer.observe(animationContainer); 
+                 observer.observe(animContainer); 
             }
         });
-
-        // Lógica de cierre del panel (restablecemos el video principal)
         closeInfoBtn.addEventListener('click', () => {
-            infoPanel.classList.remove('is-active'); 
-            mainContainer.style.opacity = '1';
-
-            video.play(); 
-            playPauseBtn.style.display = 'block'; 
-            mainMusicBtn.style.display = 'block'; 
+            infoPanel.classList.remove('is-active'); mainContainer.style.opacity = '1';
+            video.play(); playPauseBtn.style.display = 'block'; 
+            mainMusicBtn.style.display = 'block'; // Mostramos el botón principal de nuevo
             playPauseBtn.textContent = 'Ⅱ';
             
-            // NUEVO: Pausar el video secundario al cerrar
-            if (panelVideo) {
-                panelVideo.pause();
-            }
-
             // -----------------------------------------------------
             // NUEVA LOGICA: Dejar de observar cuando se cierra el panel
             // -----------------------------------------------------
-            if (animationContainer) {
-                observer.unobserve(animationContainer);
+            if (animContainer) {
+                observer.unobserve(animContainer);
             }
         });
     }
 
-    // Lógica de Pestañas US/WORK (ACTUALIZADO para manejar observer y video)
+    // Lógica de Pestañas US/WORK (ACTUALIZADO para manejar observer)
     function switchPanelContent(contentType) {
-         // Referencia al contenedor del video del panel
-        const panelVideoBackground = document.querySelector('.panel-video-background');
-
         if (contentType === 'us') {
-            contentUs.style.display = 'block'; 
-            contentWork.style.display = 'none';
-            navUsBtn.classList.add('active'); 
-            navWorkBtn.classList.remove('active');
-            
-            // NUEVO: Ocultar el video de fondo si estamos en móvil y mostramos contenido
-            if (window.innerWidth <= 768 && panelVideoBackground) {
-                panelVideoBackground.style.display = 'none';
-                panelVideo.pause();
-            }
+            contentUs.style.display = 'block'; contentWork.style.display = 'none';
+            navUsBtn.classList.add('active'); navWorkBtn.classList.remove('active');
             
             // --- LÓGICA DE REINICIO DE ANIMACIÓN AÑADIDA AQUÍ ---
             hasAnimated = false; // Reinicia la bandera para permitir la animación de nuevo
-            if (animationContainer) {
-                observer.unobserve(animationContainer); // Dejamos de observar brevemente
-                observer.observe(animationContainer); // Volvemos a observar para que se dispare
+            if (animContainer) {
+                observer.unobserve(animContainer); // Dejamos de observar brevemente
+                observer.observe(animContainer); // Volvemos a observar para que se dispare
             }
             // ---------------------------------------------------
             
         } else if (contentType === 'work') {
-            contentUs.style.display = 'none'; 
-            contentWork.style.display = 'block';
-            navUsBtn.classList.remove('active'); 
-            navWorkBtn.classList.add('active');
-            
-            // NUEVO: Ocultar el video de fondo si estamos en móvil y mostramos contenido
-            if (window.innerWidth <= 768 && panelVideoBackground) {
-                panelVideoBackground.style.display = 'none';
-                panelVideo.pause();
-            }
-
-             if (animationContainer) observer.unobserve(animationContainer); 
+            contentUs.style.display = 'none'; contentWork.style.display = 'block';
+            navUsBtn.classList.remove('active'); navWorkBtn.classList.add('active');
+             if (animContainer) observer.unobserve(animContainer); // Dejamos de observar al cambiar a WORK
         }
     }
 
@@ -383,3 +345,4 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
 }); // Fin del evento DOMContentLoaded
+
