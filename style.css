@@ -623,22 +623,24 @@ body {
     .main-container {
         /* Usamos transform: scale() para mantener las proporciones */
         transform: scale(var(--escala-movil)); 
-        /* Ajustamos el margen superior para que no quede demasiado pegado al borde virtual escalado */
-        margin-top: 2rem; 
+        margin: 0; /* Aseguramos que no haya márgenes que interfieran con el centrado */
     }
 
-    /* El panel lateral debe ignorar la escala y ocupar toda la pantalla */
+    /* ----------------------------------------------------- */
+    /* CORRECCIÓN: Evitamos que el panel lateral herede la escala */
+    /* ----------------------------------------------------- */
     .info-panel {
         width: 100vw;
         padding: 0rem 2.5rem; /* 40px */
-        /* Reseteamos cualquier posible escala que pudiera heredar si estuviera dentro del main-container */
-        transform: translateX(100%) scale(1) !important; 
+        /* Aseguramos que la escala sea 1 para que ocupe todo el ancho correctamente */
+        transform: translateX(100%) scale(1); 
     }
     
-    /* El contenido del panel lateral también debe resetearse si hereda escala */
+    /* Aseguramos que el contenido del panel no tenga escalas raras */
     .sticky-panel-header, .info-content {
-         transform: scale(1) !important; 
+         transform: scale(1); 
     }
+
 
     /* Aseguramos que la X se vea bien en móvil */
     .info-panel .close-button#close-info-btn {
