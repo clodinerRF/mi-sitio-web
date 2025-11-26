@@ -667,10 +667,32 @@ body {
         right: 3.5rem; /* Ajuste para que no colisione con la X en móvil */
     }
     
-    /* Ajustes para que el texto de US/WORK no se escale mal */
-    .anim-number { font-size: 4rem; padding-right: 0.5rem; } /* Ajuste de tamaño en móvil */
-    .anim-text { font-size: 0.8rem; margin-top: 0; } /* Ajuste de tamaño en móvil */
+    /* ----------------------------------------------------- */
+    /* AJUSTES SOLICITADOS PARA ANIMACION 25 */
+    /* ----------------------------------------------------- */
+    .animation-container-25 {
+       flex-direction: column; /* Apilamos verticalmente */
+       align-items: flex-start; /* Alineamos a la izquierda */
+       margin-bottom: 1.875rem; /* 30px */
+    }
+
+    /* TAMAÑO MUCHO MÁS GRANDE */
+    .info-panel .anim-number {
+        font-size: 15rem; /* MUCHO MÁS GRANDE: 240px */
+        padding-right: 0rem; 
+        line-height: 1; /* Ayuda a que quede pegado a la frase de abajo */
+    }
     
+    /* ESTILO PARA LA FRASE EN MÓVIL (Ahora en 2 líneas, debajo y con ancho similar al 25) */
+    .anim-text {
+        font-size: 0.9rem; 
+        margin-left: 0;
+        margin-top: 0.3125rem; /* 5px de espacio: se acerca más al 25 */
+        white-space: normal; /* Permitimos el salto de línea */
+        line-height: 1.2;
+        width: 15rem; /* Ancho de 240px, similar al tamaño visual del número */
+    }
+
     .work-grid {
         grid-template-columns: repeat(auto-fill, minmax(9.375rem, 1fr)); /* 150px */
     }
@@ -699,5 +721,15 @@ body {
         font-size: 1.5rem; 
         height: 2.8125rem; /* 45px */
         width: 2.1875rem; /* 35px */
+    }
+
+    /* Ajuste de tamaño para el número en pantallas muy pequeñas */
+    .info-panel .anim-number {
+        font-size: 10rem; 
+    }
+    
+    /* Ajuste de tamaño para la frase en pantallas muy pequeñas */
+    .anim-text {
+        width: 10rem; /* Ancho ajustado */
     }
 }

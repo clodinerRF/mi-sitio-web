@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const navWorkBtn = document.getElementById('nav-work');
     const contentUs = document.getElementById('info-content-us');
     const contentWork = document.getElementById('info-content-work');
+    const animationContainer = document.querySelector('.animation-container-25'); // Nueva referencia al contenedor de animación
 
     // --- Referencias a NUEVOS elementos de Audio y Botones (Música) ---
     const musicAudio = document.getElementById('background-music');
@@ -38,10 +39,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // Contenido para la sección US
     const contentUsHTML = `
         <span class="content-us-title content-us-fine-title">NO HAY TRABAJO<br>PEQUEÑO<br>HAY TRABAJO<br>BIEN HECHO<br>O MAL HECHO</span>
-        <div class="animation-container-25">
+        <div class="animation-container-25" id="animation-container-25">
             <span class="anim-number" id="animated-number">0</span>
-            <!-- TEXTO ACTUALIZADO PARA QUE QUEDE EN UNA LÍNEA EN MÓVIL -->
-            <span class="anim-text" id="animated-text">AÑOS DE EXPERIENCIA EN RETAIL Y DISTRIBUCIÓN</span>
+            <!-- TEXTO ACTUALIZADO PARA QUE QUEDE EN DOS LÍNEAS -->
+            <span class="anim-text" id="animated-text">AÑOS DE EXPERIENCIA<br>EN RETAIL Y DISTRIBUCIÓN</span>
         </div>
         <span class="content-us-text">A lo largo de todo este tiempo hemos realizado proyectos de distintas envergaduras para nuestros clientes desde folletos (nacionales y territoriales), segmentaciones packaging, jingles, cuñas de radio, prensa, publicidad exterior, P.O.S., Centros Comerciales, cartelerías, hasta campañas de planes de comercio para televisión.</span>
         <span class="content-us-title content-us-fine-title">HACER GRANDES<br>CAMPAÑAS<br>ESTÁ MUY BIEN...<br>PERO CONSTRUIR<br>MARCA<br>TODOS LOS DÍAS,<br>ES VITAL.</span>
@@ -78,16 +79,22 @@ document.addEventListener('DOMContentLoaded', (event) => {
     if (contentUs) contentUs.innerHTML = contentUsHTML;
     if (contentWork) contentWork.innerHTML = contentWorkHTML;
     
-    // Lógica de la animación del contador (sin cambios)
+    // Lógica de la animación del contador 
+    let hasAnimated = false; // Bandera para asegurar que la animación solo corra una vez
+
     function runCounterAnimation() { 
+        if (hasAnimated) return; // Salir si ya animó
+
         const numberElement = document.getElementById('animated-number');
         const textElement = document.getElementById('animated-text');
         const finalNumber = 25;
         let currentNumber = 0;
         const duration = 1500;
         const stepTime = Math.ceil(duration / finalNumber);
+        
         if (numberElement) { numberElement.textContent = '0'; numberElement.classList.remove('is-final-color'); }
         if (textElement) { textElement.classList.remove('is-visible'); }
+        
         const counterInterval = setInterval(() => {
             currentNumber++;
             if (numberElement) { numberElement.textContent = currentNumber; }
@@ -95,8 +102,31 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 clearInterval(counterInterval);
                 if (numberElement) { numberElement.classList.add('is-final-color'); }
                 if (textElement) { textElement.classList.add('is-visible'); }
+                hasAnimated = true; // Marcamos como animado
             }
         }, stepTime);
+    }
+
+    // -----------------------------------------------------
+    // NUEVA LOGICA: Animacion al hacer scroll (Intersection Observer)
+    // -----------------------------------------------------
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            // Si el elemento es visible y no se ha animado antes, ejecutamos la animación.
+            if (entry.isIntersecting && !hasAnimated) {
+                runCounterAnimation();
+            }
+        });
+    }, {
+        root: null, // Observa con respecto al viewport (ventana del navegador)
+        rootMargin: '0px',
+        threshold: 0.5 // Se dispara cuando el 50% del elemento es visible
+    });
+
+    // Observamos el contenedor de la animación si existe
+    const animContainer = document.getElementById('animation-container-25');
+    if (animContainer) {
+        observer.observe(animContainer);
     }
 
     // Funcionalidad del Video (sin cambios)
@@ -175,24 +205,41 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
             contentUs.style.display = 'none'; contentWork.style.display = 'none';
             navUsBtn.classList.remove('active'); navWorkBtn.classList.remove('active');
+
+            // -----------------------------------------------------
+            // NUEVA LOGICA: Observar la animación cuando se abre el panel
+            // -----------------------------------------------------
+            if (animContainer) {
+                 // Si el panel de US está activo (por defecto no), empezamos a observar
+                 observer.observe(animContainer); 
+            }
         });
         closeInfoBtn.addEventListener('click', () => {
             infoPanel.classList.remove('is-active'); mainContainer.style.opacity = '1';
             video.play(); playPauseBtn.style.display = 'block'; 
             mainMusicBtn.style.display = 'block'; // Mostramos el botón principal de nuevo
             playPauseBtn.textContent = 'Ⅱ';
+            
+            // -----------------------------------------------------
+            // NUEVA LOGICA: Dejar de observar cuando se cierra el panel
+            // -----------------------------------------------------
+            if (animContainer) {
+                observer.unobserve(animContainer);
+            }
         });
     }
 
-    // Lógica de Pestañas US/WORK (sin cambios)
+    // Lógica de Pestañas US/WORK (ACTUALIZADO para manejar observer)
     function switchPanelContent(contentType) {
         if (contentType === 'us') {
             contentUs.style.display = 'block'; contentWork.style.display = 'none';
             navUsBtn.classList.add('active'); navWorkBtn.classList.remove('active');
-            runCounterAnimation(); 
+            // runCounterAnimation(); // Ya no llamamos a esto directamente
+            if (animContainer) observer.observe(animContainer); // Empezamos a observar al cambiar a US
         } else if (contentType === 'work') {
             contentUs.style.display = 'none'; contentWork.style.display = 'block';
             navUsBtn.classList.remove('active'); navWorkBtn.classList.add('active');
+             if (animContainer) observer.unobserve(animContainer); // Dejamos de observar al cambiar a WORK
         }
     }
 
