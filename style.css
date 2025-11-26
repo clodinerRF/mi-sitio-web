@@ -256,7 +256,6 @@ body {
     background-color: var(--color-primary);
 }
 
-
 /* --- ESTILOS DEL PANEL LATERAL DE INFORMACIÓN --- */
 .info-panel {
     position: fixed;
@@ -607,6 +606,31 @@ body {
     100% { transform: rotate(360deg); }
 }
 
+/* NUEVOS ESTILOS PARA EL VIDEO DEL PANEL LATERAL */
+.panel-video-background {
+    display: none; /* Oculto por defecto */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2; /* Por debajo del header fijo y del contenido */
+    overflow: hidden;
+}
+
+.panel-video-background video {
+    /* Mismos estilos que el video principal para cubrir el contenedor */
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
 /* MEDIA QUERIES EXCLUSIVAS PARA MÓVILES (Max-width 768px) */
 @media (max-width: 48rem) { /* 768px */
     /* -> AQUI HEMOS CAMBIADO EL VALOR DE 0.80 a 0.90 <- */
@@ -635,10 +659,26 @@ body {
         /* Aseguramos que la escala sea 1 para que ocupe todo el ancho correctamente */
         transform: translateX(100%) scale(1); 
     }
-    
+
     /* Aseguramos que el contenido del panel no tenga escalas raras */
     .sticky-panel-header, .info-content {
          transform: scale(1); 
+    }
+
+    /* NUEVO: Mostrar el video del panel solo en móvil */
+    .panel-video-background {
+        display: block; 
+    }
+    
+    /* El header fijo también necesita un fondo sólido para tapar el video */
+    .sticky-panel-header {
+        background-color: var(--color-background-white);
+    }
+    
+    /* Aseguramos que los contenidos tengan fondo blanco para ocultar el video cuando están visibles */
+    .info-content {
+        background-color: var(--color-background-white);
+        padding-bottom: 5rem; /* Añadimos padding inferior para que el contenido no quede pegado al final */
     }
 
 
