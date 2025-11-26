@@ -9,9 +9,14 @@
 </head>
 <body>
 
-    <!-- Contenedor del Video de Fondo (ELIMINADO DE AQUÍ, AHORA ESTÁ EN EL PANEL LATERAL) -->
-    <!-- El video ahora solo se ve DENTRO del panel "About" -->
-    
+    <!-- Contenedor del Video de Fondo -->
+    <div class="video-background">
+        <video id="background-video" autoplay muted loop poster="assets/fondo-estatico.jpg" playsinline controls class="force-controls-off">
+            <source src="assets/mi-fondo.mp4" type="video/mp4">
+            Tu navegador no soporta la etiqueta de video.
+        </video>
+    </div>
+
     <!-- Contenedor Principal (El Recuadro Centrado a la Izquierda) -->
     <div class="main-container">
         <div class="flip-card-inner">
@@ -67,12 +72,11 @@
                 <p class="panel-description" id="info-panel-title">Creatividad,<br>diseño gráfico<br>y comunicación.</p>
             </div>
 
-            <!-- Navegación US | WORK (CON SEPARADOR HORIZONTAL) -->
+            <!-- Navegación US | WORK (CON SEPARADOR HORIZONTAL Y SPAN PARA MEDIR) -->
             <div class="panel-nav">
                 <button id="nav-us" class="panel-nav-btn">US</button>
                 <div class="panel-separator" id="panel-separator-line"></div>
                 <button id="nav-work" class="panel-nav-btn">
-                    <!-- Span añadido para la medición exacta por JS -->
                     <span id="work-text-span">WORK</span>
                 </button>
             </div>
@@ -94,16 +98,6 @@
 
         </div> 
         <!-- Fin Contenedor Wrapper Fijo -->
-
-        <!-- >>> NUEVO CONTENEDOR DEL VIDEO DENTRO DEL PANEL (Se muestra por defecto) <<< -->
-        <div id="video-placeholder" class="video-placeholder">
-            <!-- El video va aqui dentro ahora -->
-            <video id="background-video" autoplay muted loop poster="assets/fondo-estatico.jpg" playsinline controls class="force-controls-off">
-                <source src="assets/mi-fondo.mp4" type="video/mp4">
-                Tu navegador no soporta la etiqueta de video.
-            </video>
-        </div>
-        <!-- >>> FIN NUEVO CONTENEDOR <<< -->
 
 
         <!-- Contenedores de Contenido Dinámico (Controlados por JS) -->
@@ -137,7 +131,7 @@
         </div>
     </div>
 
-    <!-- Botón de Pausa/Reproducción en la esquina inferior derecha (AHORA MUEVE EL VIDEO DENTRO DEL PANEL) -->
+    <!-- Botón de Pausa/Reproducción en la esquina inferior derecha -->
     <button id="play-pause-btn" class="video-control-btn" aria-label="Pausar vídeo de fondo">Ⅱ</button>
     
     <!-- BOTÓN DE MÚSICA DE LA PANTALLA PRINCIPAL (NUEVO - Usa la misma clase visual que el de vídeo) -->

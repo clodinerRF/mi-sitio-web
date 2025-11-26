@@ -27,16 +27,31 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const contentUs = document.getElementById('info-content-us');
     const contentWork = document.getElementById('info-content-work');
     const animationContainer = document.querySelector('.animation-container-25'); // Nueva referencia al contenedor de animación
-
+    
     // --- Referencias a NUEVOS elementos de Audio y Botones (Música) ---
     const musicAudio = document.getElementById('background-music');
     const mainMusicBtn = document.getElementById('main-music-btn');
     const panelMusicBtn = document.getElementById('panel-music-btn');
 
-    // --- Referencias a NUEVOS elementos para el control de la línea y el vídeo ---
-    const workTextSpan = document.getElementById('work-text-span'); // Texto 'WORK' para medir
-    const separatorLine = document.getElementById('panel-separator-line'); // La línea negra
-    const videoPlaceholder = document.getElementById('video-placeholder'); // El contenedor del vídeo en el panel
+    // REFERENCIAS Y LÓGICA NUEVA PARA MEDIR LA LÍNEA
+    const workTextSpan = document.getElementById('work-text-span');
+    const separatorLine = document.getElementById('panel-separator-line');
+
+    function adjustSeparatorWidth() {
+        if (workTextSpan && separatorLine) {
+            // Medimos el ancho exacto del span que contiene "WORK"
+            const workWidth = workTextSpan.offsetWidth;
+            // Aplicamos ese ancho a la línea en píxeles exactos
+            separatorLine.style.width = workWidth + 'px';
+        }
+    }
+
+    // Ejecutar al cargar la página inicialmente
+    adjustSeparatorWidth();
+
+    // Ejecutar cada vez que la ventana cambia de tamaño
+    window.addEventListener('resize', adjustSeparatorWidth);
+    // FIN LÓGICA NUEVA PARA MEDIR LA LÍNEA
 
     // Variable global para almacenar el índice del proyecto actual
     let currentProjectIndex = 0; 
@@ -201,51 +216,52 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
 
     // Funcionalidad del Panel de Información Lateral (ACTUALIZADO para ocultar botón de música principal)
-    if (aboutLink && infoPanel && closeInfoBtn && mainContainer && video && playPauseBtn && mainMusicBtn && videoPlaceholder) {
+    if (aboutLink && infoPanel && closeInfoBtn && mainContainer && video && playPauseBtn && mainMusicBtn) {
         aboutLink.addEventListener('click', (e) => {
             e.preventDefault(); infoPanel.classList.add('is-active'); mainContainer.style.opacity = '0';
-            // Ocultamos el botón de vídeo y música principal cuando abrimos el panel About
-            playPauseBtn.style.display = 'none';
+            video.pause(); playPauseBtn.textContent = '▶'; playPauseBtn.style.display = 'none';
+            // Ocultamos también el botón de música principal cuando abrimos el panel
             mainMusicBtn.style.display = 'none';
-
-            // >>>>> MOSTRAMOS EL VIDEO POR DEFECTO Y LO REPRODUCIMOS <<<<<
-            videoPlaceholder.style.display = 'block';
-            video.play(); 
 
             contentUs.style.display = 'none'; contentWork.style.display = 'none';
             navUsBtn.classList.remove('active'); navWorkBtn.classList.remove('active');
 
-            if (animContainer) { observer.observe(animContainer); }
+            // -----------------------------------------------------
+            // NUEVA LOGICA: Observar la animación cuando se abre el panel
+            // -----------------------------------------------------
+            if (animContainer) {
+                 // Si el panel de US está activo (por defecto no), empezamos a observar
+                 observer.observe(animContainer); 
+            }
         });
         closeInfoBtn.addEventListener('click', () => {
             infoPanel.classList.remove('is-active'); mainContainer.style.opacity = '1';
-            
-            // >>>>> OCULTAMOS EL VIDEO AL CERRAR EL PANEL <<<<<
-            videoPlaceholder.style.display = 'none';
-            // Devolvemos el control de vídeo/música a la pantalla principal
-            video.pause(); // Pausamos el video al cerrar
-            playPauseBtn.style.display = 'block'; 
+            video.play(); playPauseBtn.style.display = 'block'; 
             mainMusicBtn.style.display = 'block'; // Mostramos el botón principal de nuevo
-            playPauseBtn.textContent = '▶'; // Cambiamos el icono a 'Play'
-
-            if (animContainer) { observer.unobserve(animContainer); }
+            playPauseBtn.textContent = 'Ⅱ';
+            
+            // -----------------------------------------------------
+            // NUEVA LOGICA: Dejar de observar cuando se cierra el panel
+            // -----------------------------------------------------
+            if (animContainer) {
+                observer.unobserve(animContainer);
+            }
         });
     }
 
-    // Lógica de Pestañas US/WORK (ACTUALIZADO para manejar observer y el video)
+    // Lógica de Pestañas US/WORK (ACTUALIZADO para manejar observer)
     function switchPanelContent(contentType) {
-        // >>>>> OCULTAMOS EL VIDEO CUANDO CAMBIAMOS DE PESTAÑA <<<<<
-        if (videoPlaceholder) videoPlaceholder.style.display = 'none';
-
         if (contentType === 'us') {
             contentUs.style.display = 'block'; contentWork.style.display = 'none';
             navUsBtn.classList.add('active'); navWorkBtn.classList.remove('active');
             
+            // --- LÓGICA DE REINICIO DE ANIMACIÓN AÑADIDA AQUÍ ---
             hasAnimated = false; // Reinicia la bandera para permitir la animación de nuevo
             if (animContainer) {
                 observer.unobserve(animContainer); // Dejamos de observar brevemente
                 observer.observe(animContainer); // Volvemos a observar para que se dispare
             }
+            // ---------------------------------------------------
             
         } else if (contentType === 'work') {
             contentUs.style.display = 'none'; contentWork.style.display = 'block';
@@ -256,23 +272,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     navUsBtn.addEventListener('click', () => switchPanelContent('us'));
     navWorkBtn.addEventListener('click', () => switchPanelContent('work'));
-
-
-    // --- LÓGICA DE ALINEACIÓN EXACTA DE LA LÍNEA (NUEVO) ---
-    function adjustSeparatorWidth() {
-        if (workTextSpan && separatorLine) {
-            // Medimos el ancho exacto del span que contiene "WORK"
-            const workWidth = workTextSpan.offsetWidth;
-            // Aplicamos ese ancho a la línea en píxeles exactos
-            separatorLine.style.width = workWidth + 'px';
-        }
-    }
-
-    // Ejecutar al cargar la página inicialmente
-    adjustSeparatorWidth();
-
-    // Ejecutar cada vez que la ventana cambia de tamaño
-    window.addEventListener('resize', adjustSeparatorWidth);
 
 
     // --- Lógica del Pop-up Modal de Proyectos (WORK) (ACTUALIZADA CON SPINNER) ---
