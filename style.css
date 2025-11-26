@@ -667,12 +667,18 @@ body {
     }
     
     /* ----------------------------------------------------- */
-    /* AJUSTES SOLICITADOS PARA ANIMACION 25 */
+    /* AJUSTES SOLICITADOS PARA ANIMACION 25 (MAXIMIZADO) */
     /* ----------------------------------------------------- */
     .animation-container-25 {
        flex-direction: column; /* Apilamos verticalmente */
        align-items: flex-start; /* Alineamos a la izquierda */
        margin-bottom: 1.875rem; /* 30px */
+       
+       /* >>>>>> NUEVOS ESTILOS DE ESCALADO <<<<<< */
+       transform: scale(1.4); /* Escalamos el conjunto completo (ajústalo si es mucho/poco) */
+       transform-origin: top left; /* El punto de origen del escalado es arriba a la izquierda */
+       margin-bottom: 5rem; /* Compensamos el margen inferior tras el zoom para evitar solapamientos */
+       /* >>>>>> FIN NUEVOS ESTILOS <<<<<< */
     }
 
     /* TAMAÑO MUCHO MÁS GRANDE */
