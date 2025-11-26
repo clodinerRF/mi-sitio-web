@@ -612,8 +612,8 @@ body {
 
 /* MEDIA QUERIES EXCLUSIVAS PARA MÓVILES (Max-width 768px) */
 @media (max-width: 48rem) { /* 768px */
-    /* -> AQUI HEMOS CAMBIADO EL VALOR DE 0.75 a 0.80 <- */
-    :root { --escala-movil: 0.80; } 
+    /* -> AQUI HEMOS CAMBIADO EL VALOR DE 0.80 a 0.90 <- */
+    :root { --escala-movil: 0.90; } 
 
     body {
         /* Eliminamos el padding izquierdo y centramos el contenido principal */
@@ -678,9 +678,9 @@ body {
 
 /* Media query adicional para refinar el diseño en móviles muy pequeños (ej. iPhone SE) */
 @media (max-width: 30rem) { /* 480px */
-     /* -> AQUI HEMOS CAMBIADO EL VALOR DE 0.65 a 0.70 <- */
+     /* -> AQUI HEMOS CAMBIADO EL VALOR DE 0.70 a 0.80 <- */
     :root {
-        --escala-movil: 0.70; 
+        --escala-movil: 0.80; 
     }
 
     .info-panel {
