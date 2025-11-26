@@ -27,11 +27,31 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const contentUs = document.getElementById('info-content-us');
     const contentWork = document.getElementById('info-content-work');
     const animationContainer = document.querySelector('.animation-container-25'); // Nueva referencia al contenedor de animación
-
+    
     // --- Referencias a NUEVOS elementos de Audio y Botones (Música) ---
     const musicAudio = document.getElementById('background-music');
     const mainMusicBtn = document.getElementById('main-music-btn');
     const panelMusicBtn = document.getElementById('panel-music-btn');
+
+    // REFERENCIAS Y LÓGICA NUEVA PARA MEDIR LA LÍNEA
+    const workTextSpan = document.getElementById('work-text-span');
+    const separatorLine = document.getElementById('panel-separator-line');
+
+    function adjustSeparatorWidth() {
+        if (workTextSpan && separatorLine) {
+            // Medimos el ancho exacto del span que contiene "WORK"
+            const workWidth = workTextSpan.offsetWidth;
+            // Aplicamos ese ancho a la línea en píxeles exactos
+            separatorLine.style.width = workWidth + 'px';
+        }
+    }
+
+    // Ejecutar al cargar la página inicialmente
+    adjustSeparatorWidth();
+
+    // Ejecutar cada vez que la ventana cambia de tamaño
+    window.addEventListener('resize', adjustSeparatorWidth);
+    // FIN LÓGICA NUEVA PARA MEDIR LA LÍNEA
 
     // Variable global para almacenar el índice del proyecto actual
     let currentProjectIndex = 0; 
@@ -138,6 +158,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 playPauseBtn.setAttribute('aria-label', 'Pausar vídeo de fondo');
             } else {
                 video.pause();
+                playPauseBtn.textContent = '▶';
+                playPauseBtn.setAttribute('aria-label', 'Reproducir vídeo de fondo');
             }
         });
     }
@@ -319,12 +341,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     closeModalBtn.addEventListener('click', () => {
         workModal.classList.remove('is-active');
         modalBody.innerHTML = ''; // Limpiamos el contenido al cerrar
-        modalSpinner.style.display = 'none'; // Aseguramos que el spinner se oculte
+        modalSpinner.style.display = 'none'; // Aseguramos que el spinner se oculte si aún estaba visible
     });
-    
-    workModal.addEventListener('click', (e) => {
-        if (e.target === workModal) {
-            closeModalBtn.click();
-        }
-    });
-}); // Cierre del DOMContentLoaded
+
+}); // Fin del evento DOMContentLoaded

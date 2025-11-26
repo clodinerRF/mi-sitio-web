@@ -345,14 +345,13 @@ body {
     opacity: 1; 
 }
 
-/* ESTILO DE LA RAYA NEGRA HORIZONTAL (Ancho ajustado para alinearse con el final de la 'K' de WORK) */
+/* ESTILO DE LA RAYA NEGRA HORIZONTAL (El ancho ahora lo controla JavaScript, solo definimos la altura y el color) */
 .panel-separator {
     display: block; 
     height: 0.1875rem; /* 3px */
     background-color: var(--color-text-dark); 
     margin: 0.3125rem 0; /* 5px */
-    /* ANCHO FINAL AJUSTADO */
-    width: 10.5rem; /* 168px */
+    /* width: ELIMINADO DE AQUÍ - se manejará con JS */
     align-self: flex-start; 
 }
 
